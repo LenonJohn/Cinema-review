@@ -32,6 +32,9 @@
       <p>Body</p>
       <p><%= review.body %></p>
     </div>
+    <div class="card-footer text-right">
+      <p class="my-auto"><%= review.created_at.to_s(:datetime_jp) %></p>
+    </div>
   </div>
     <% end %>
     
