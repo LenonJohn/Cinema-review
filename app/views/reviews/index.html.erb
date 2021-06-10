@@ -24,7 +24,7 @@
     <% end %>
   </div>
   <!--投稿一覧-->
-  <% @review.each do |review| %>
+  <% @review.reverse_each do |review| %>
     <!--レビュー-->
     <div class="card mx-auto my-4 shadow-lg">
       <%= link_to review_path(review.id), class: "text-dark" do %>
@@ -36,18 +36,31 @@
       </div>
       <% end %>
       
-      <div class="card-footer text-right">
-        <!--投稿日-->
-        <p class="my-auto"><%= review.created_at.to_s(:datetime_jp) %></p>
-        <!--いいね機能-->
-        <% if review.favorited_by?(current_user) %>
-          <p><%= link_to review_favorites_path(review), method: :delete do %> <i class="fas fa-heart"></i> <%= review.favorites.count %></p>
+      <div class="card-footer">
+        <div class= "row" >
+          <!--投稿者・投稿日-->
+          <div class="my-auto col-sm">by <%= review.user.name %> <%= review.created_at.to_s(:datetime_jp) %></div>
+          <!--いいね・コメント-->
+          <% if review.favorited_by?(current_user) %>
+            <div class="my-auto col-sm text-right">
+              <%= link_to review_path(review.id) do %>
+              <i class="far fa-comment-alt"></i> <%= review.post_comments.count %>
+              <% end %>
+              <%= link_to review_favorites_path(review), method: :delete do %>
+              <i class="fas fa-heart"></i> <%= review.favorites.count %>
+              <% end %>
+            </div>
+            <% else %>
+            <div class="my-auto col-sm text-right">
+              <%= link_to review_path(review.id) do %>
+              <i class="far fa-comment-alt"></i> <%= review.post_comments.count %>
+              <% end %>
+              <%= link_to review_favorites_path(review), method: :post do %>
+              <i class="far fa-heart"></i> <%= review.favorites.count %>
+              <% end %>
+            </div>
           <% end %>
-          
-          <% else %>
-          <p><%= link_to review_favorites_path(review), method: :post do %> <i class="far fa-heart"></i> <%= review.favorites.count %></p>
-          <% end %>
-        <% end %>
+        </div>
         
       </div>
       
