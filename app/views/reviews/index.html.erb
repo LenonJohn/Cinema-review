@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container col-lg-4">
   <h1>Review</h1>
+  <!--新規投稿-->
   <%= form_with model:@new_review, local:true do |f| %>
-  <div class="card w-50 mx-auto mt-4 shadow-lg">
-    
+  <div class="card mx-auto mt-4 shadow-lg">
     <div class="card-body">
       <div class="form-group">
         <%= f.text_field :title, placeholder:"Title", class:"form-control" %>
@@ -23,20 +23,37 @@
     </div>
     <% end %>
   </div>
-  
-    <% @review.each do |review| %>
-  <div class="card w-50 mx-auto my-4 shadow-lg">
-    <div class="card-body">
-      <p>Title</p>
-      <p><%= review.title %></p>
-      <p>Body</p>
-      <p><%= review.body %></p>
+  <!--投稿一覧-->
+  <% @review.each do |review| %>
+    <!--レビュー-->
+    <div class="card mx-auto my-4 shadow-lg">
+      <%= link_to review_path(review.id), class: "text-dark" do %>
+      <div class="card-body">
+        <p>Title</p>
+        <p class="alert alert-secondary" role="alert"><%= review.title %></p>
+        <p>Body</p>
+        <p class="alert alert-dark" role="alert"><%= review.body %></p>
+      </div>
+      <% end %>
+      
+      <div class="card-footer text-right">
+        <!--投稿日-->
+        <p class="my-auto"><%= review.created_at.to_s(:datetime_jp) %></p>
+        <!--いいね機能-->
+        <% if review.favorited_by?(current_user) %>
+          <p><%= link_to review_favorites_path(review), method: :delete do %> <i class="fas fa-heart"></i> <%= review.favorites.count %></p>
+          <% end %>
+          
+          <% else %>
+          <p><%= link_to review_favorites_path(review), method: :post do %> <i class="far fa-heart"></i> <%= review.favorites.count %></p>
+          <% end %>
+        <% end %>
+        
+      </div>
+      
     </div>
-    <div class="card-footer text-right">
-      <p class="my-auto"><%= review.created_at.to_s(:datetime_jp) %></p>
-    </div>
-  </div>
-    <% end %>
+    
+  <% end %>
     
     
 </div>
