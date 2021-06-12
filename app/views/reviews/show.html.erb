@@ -2,11 +2,16 @@
   
   <div class="card mx-auto my-4 shadow-lg">
     
+    <div class="card-header">
+      <div class="row">
+        <h3 class="col-sm-9"><%= @review.cinema_title %></h3>
+        <h3 class="col-sm-3 text-right"><%= @review.rate %> /5.0</h3>
+      </div>
+    </div>
+    
     <div class="card-body">
-      <p>Title</p>
-      <p class="alert alert-secondary" role="alert"><%= @review.title %></p>
-      <p>Body</p>
-      <p class="alert alert-dark" role="alert" rows="2" ><%= @review.body %></p>
+      <p>Title:  <%= @review.title %></p>
+      <p class="alert alert-dark" role="alert" ><%= @review.body %></p>
     </div>
     
     <div class="card-footer">
