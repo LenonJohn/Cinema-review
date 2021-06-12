@@ -21,8 +21,8 @@
       </div>
       <% end %>
     </div>
-    <% end %>
   </div>
+  <% end %>
   <!--投稿一覧-->
   <% @review.reverse_each do |review| %>
     <!--レビュー-->
@@ -41,25 +41,9 @@
           <!--投稿者・投稿日-->
           <div class="my-auto col-sm">by <%= review.user.name %> <%= review.created_at.to_s(:datetime_jp) %></div>
           <!--いいね・コメント-->
-          <% if review.favorited_by?(current_user) %>
-            <div class="my-auto col-sm text-right">
-              <%= link_to review_path(review.id) do %>
-              <i class="far fa-comment-alt"></i> <%= review.post_comments.count %>
-              <% end %>
-              <%= link_to review_favorites_path(review), method: :delete do %>
-              <i class="fas fa-heart"></i> <%= review.favorites.count %>
-              <% end %>
-            </div>
-            <% else %>
-            <div class="my-auto col-sm text-right">
-              <%= link_to review_path(review.id) do %>
-              <i class="far fa-comment-alt"></i> <%= review.post_comments.count %>
-              <% end %>
-              <%= link_to review_favorites_path(review), method: :post do %>
-              <i class="far fa-heart"></i> <%= review.favorites.count %>
-              <% end %>
-            </div>
-          <% end %>
+          <div id = "review_<%= review.id %>" >
+            <%= render "reviews/favorite", review: review %>
+          </div>
         </div>
         
       </div>
