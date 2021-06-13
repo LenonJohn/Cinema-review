@@ -6,7 +6,10 @@ class ReviewsController < ApplicationController
   def create
     @new_review = Review.new(review_params)
     @new_review.user_id = current_user.id
+    # tag_list = params[:review][:tag_name].split(nil) 
+    tag_list = params[:tag_name].split(nil) 
     @new_review.save
+    @new_review.save_tag(tag_list)
     redirect_to reviews_path
   end
 
@@ -16,6 +19,7 @@ class ReviewsController < ApplicationController
   
   def show
     @review = Review.find(params[:id])
+    @post_tags = @review.tags
     @post_comment = PostComment.new
     @all_comments = PostComment.all
   end
