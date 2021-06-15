@@ -15,6 +15,13 @@ class ReviewsController < ApplicationController
 
   def index
     @review = Review.all
+    @tag_list = Tag.all
+  end
+  
+  def tag_search
+    @tag_list = Tag.all
+    @tag = Tag.find(params[:tag_id])
+    @tag_reviews = @tag.reviews.all
   end
   
   def show
@@ -26,7 +33,12 @@ class ReviewsController < ApplicationController
 
   def destroy
     @review = Review.find(params[:id])
-    @review.destroy
+    @review.tags.each do |tag|
+      if tag.reviews.count == 1
+        tag.destroy!
+      end
+    end
+    @review.destroy!
     redirect_to reviews_path
   end
   
