@@ -12,6 +12,9 @@
     <div class="card-body">
       <p>Title:  <%= @review.title %></p>
       <p class="alert alert-dark" role="alert" ><%= @review.body %></p>
+      <% @review.tags.each do |tag| %>
+      <div class="badge badge-dark"><%= tag.tag_name %></div>
+      <% end %>
     </div>
     
     <div class="card-footer">
@@ -41,7 +44,7 @@
     </div>
   </div>
   <!--コメント一覧-->
-  <p>Comment</p>
+  <!--<p>Comment</p>-->
   <% @review.post_comments.each do |post_comment| %>
   <div class="card mx-auto my-4 shadow-lg">
     <div class="card-body">

@@ -1,76 +1,103 @@
-<div class="container col-lg-4">
-  <h1>Review</h1>
-  <!--新規投稿-->
-  <%= form_with model:@new_review, local:true do |f| %>
-  <div class="card mx-auto mt-4 shadow-lg">
-    <div class="card-body">
-      
-      <div class="form-group">
-        <div class="row">
-          
-          <div class="col-sm-9 text-left">
-            <%= f.text_field :cinema_title, placeholder:"Cinema Title",  class:"form-control" %>
-          </div>
-          
-          <div class="col-sm-3 text-right">
-            <%=f.select :rate, [["rate",0],["5",5],["4",4],["3",3],["2",2],["1",1]], {}, class:"form-control" %>
-          </div>
-          
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <%= f.text_field :title, placeholder:"Title", class:"form-control" %>
-      </div>
-      <div class="form-group">
-        <%= f.text_area :body, placeholder:"Body", class:"form-control" %>
-      </div>
-      <% if user_signed_in? %>
-      <div class="text-right">
-        <%= f.submit "Post a review", class:"btn btn-outline-secondary" %>
-      </div>
-      <% else %>
-      <div class="text-right">
-        <%= link_to "新規登録", new_user_registration_path, class: "btn btn-outline-secondary" %>
-        <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-secondary" %>
-      </div>
+<div class="container my-4">
+  <div class="row">
+    <!--タグ一覧-->
+    <div class="col-lg-2 sidebar_fixed">
+      <% @tag_list.each do |list| %>
+        <%= link_to tag_reviews_path(list.id) do %>
+        <div class="badge badge-dark"><%= list.tag_name %></div>
+        <% end %>
       <% end %>
-    </div>
-  </div>
-  <% end %>
-  <!--投稿一覧-->
-  <% @review.reverse_each do |review| %>
-    <!--レビュー-->
-    <div class="card mx-auto my-4 shadow-lg">
-      <%= link_to review_path(review.id), class: "text-dark" do %>
-      <div class="card-header">
-        <div class="row">
-          <h3 class="col-sm-9"><%= review.cinema_title %></h3>
-          <h3 class="col-sm-3 text-right"><%= review.rate %> /5.0</h3>
-        </div>
-      </div>
-      
-      <div class="card-body">
-        <p>Title:  <%= review.title %></p>
-        <p class="alert alert-dark" role="alert"><%= review.body %></p>
-      </div>
-      <% end %>
-      
-      <div class="card-footer">
-        <div class= "row" >
-          <!--投稿者・投稿日-->
-          <div class="my-auto col-sm">by <%= review.user.name %> <%= review.created_at.to_s(:datetime_jp) %></div>
-          <!--いいね・コメント-->
-          <div id = "review_<%= review.id %>" >
-            <%= render "reviews/favorite", review: review %>
-          </div>
-        </div>
-        
-      </div>
-      
     </div>
     
-  <% end %>
+    <!--新規投稿-->
+    <div class="col-lg-6">
+      <h1>Review</h1>
+      <%= form_with model:@new_review, local:true do |f| %>
+      <div class="card mt-4 shadow-lg">
+        <div class="card-body">
+          
+          <div class="form-group">
+            <div class="row">
+              
+              <div class="col-sm-9 text-left">
+                <%= f.text_field :cinema_title, placeholder:"Cinema Title",  class:"form-control" %>
+              </div>
+              
+              <div class="col-sm-3 text-right">
+                <%=f.select :rate, [["rate",0],["5",5],["4",4],["3",3],["2",2],["1",1]], {}, class:"form-control" %>
+              </div>
+              
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <%= f.text_field :title, placeholder:"Title", class:"form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.text_area :body, placeholder:"Body", class:"form-control" %>
+          </div>
+          <% if user_signed_in? %>
+          <div class="row">
+            <div class="col-sm-9">
+              <%= f.text_field :tag_name ,placeholder:"Tag", class:"form-control" %>
+            </div>
+            <div class="col-sm-3 text-right">
+              <%= f.submit "Post", class:"btn btn-outline-secondary form-control" %>
+            </div>
+          </div>
+          <% else %>
+          <div class="text-right">
+            <%= link_to "新規登録", new_user_registration_path, class: "btn btn-outline-secondary" %>
+            <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-secondary" %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      <% end %>
+      <!--投稿一覧-->
+      <% @review.reverse_each do |review| %>
+        <!--各レビュー-->
+        <div class="card mx-auto my-4 shadow-lg">
+          <%= link_to review_path(review.id), class: "text-dark" do %>
+          <!--タイトルと評価-->
+          <div class="card-header">
+            <div class="row">
+              <h3 class="col-sm-9"><%= review.cinema_title %></h3>
+              <h3 class="col-sm-3 text-right"><%= review.rate %> /5.0</h3>
+            </div>
+          </div>
+          <!--レビュー-->
+          <div class="card-body">
+            <p>Title:  <%= review.title %></p>
+            <p class="alert alert-dark" role="alert"><%= review.body %></p>
+          <% end %>
+            <!--タグ表示-->
+            <% review.tags.each do |tag| %>
+              <%= link_to tag_reviews_path(tag.id) do %>
+              <div class="badge badge-dark"><%= tag.tag_name %></div>
+              <% end %>
+            <% end %>
+          </div>
+          <!--諸機能-->
+          <div class="card-footer">
+            <div class= "row" >
+              <!--投稿者・投稿日-->
+              <div class="my-auto col-sm">by <%= review.user.name %> <%= review.created_at.to_s(:datetime_jp) %></div>
+              <!--いいね・コメント-->
+              <div id = "review_<%= review.id %>" >
+                <%= render "reviews/favorite", review: review %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="col-lg-2 card mx-1 shadow-lg">
+      <h1>left</h1>
+    </div>
+    
+  </div>
     
     
 </div>
