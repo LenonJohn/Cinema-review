@@ -6,8 +6,9 @@ Rails.application.routes.draw do
     resources :post_comments, only: [:create, :destroy]
     resource :favorites, only: [:create, :destroy]
   end
+  get 'search', to: 'reviews#search'
   
-  resources :tags do
+  resources :tags, only: [:index] do
     get "reviews", to: "reviews#tag_search"
   end
 

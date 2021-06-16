@@ -2,6 +2,7 @@
   <div class="row">
     <!--タグ一覧-->
     <div class="col-lg-2 sidebar_fixed">
+      <%= render "search_form" %>
       <% @tag_list.each do |list| %>
         <%= link_to tag_reviews_path(list.id) do %>
         <div class="badge badge-dark"><%= list.tag_name %></div>
@@ -55,7 +56,7 @@
       </div>
       <% end %>
       <!--投稿一覧-->
-      <% @review.reverse_each do |review| %>
+      <% @reviews.reverse_each do |review| %>
         <!--各レビュー-->
         <div class="card mx-auto my-4 shadow-lg">
           <%= link_to review_path(review.id), class: "text-dark" do %>
@@ -93,8 +94,8 @@
       <% end %>
     </div>
     
-    <div class="col-lg-2 card mx-1 shadow-lg">
-      <h1>left</h1>
+    <div class="col-lg-2">
+      
     </div>
     
   </div>

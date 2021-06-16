@@ -14,8 +14,16 @@ class ReviewsController < ApplicationController
   end
 
   def index
-    @review = Review.all
+    @reviews = Review.all
     @tag_list = Tag.all
+    @q = Review.ransack(params[:q])
+    @review = @q.result(distinct: true)
+  end
+  
+  def search
+    @tag_list = Tag.all
+    @q = Review.ransack(params[:q])
+    @review = @q.result(distinct: true)
   end
   
   def tag_search
@@ -46,6 +54,10 @@ class ReviewsController < ApplicationController
   
   def review_params
     params.permit(:cinema_title, :rate, :title, :body)
+  end
+  
+  def search_params
+    params.require(:q).permit!
   end
   
 end
