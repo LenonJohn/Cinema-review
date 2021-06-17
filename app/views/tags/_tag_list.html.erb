@@ -1,0 +1,5 @@
+<% tag_list.each do |list| %>
+  <%= link_to tag_path(list.id) do %>
+  <div class="badge badge-dark"><%= list.tag_name %></div>
+  <% end %>
+<% end %>

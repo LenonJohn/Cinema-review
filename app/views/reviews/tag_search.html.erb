@@ -2,20 +2,16 @@
   <div class="row">
     
     <div class="col-lg-2 sidebar_fixed">
-      <% @tag_list.each do |list| %>
-        <%= link_to tag_reviews_path(list.id) do %>
-        <div class="badge badge-dark"><%= list.tag_name %></div>
-        <% end %>
-      <% end %>
+      <%= render "tags/tag_list", tag_list: @tag_list %>
     </div>
     
     <div class="col-lg-6">
       
       <div>
-        <h1 class="btn btn-dark btn-lg"><%= @tag.tag_name %></h1>
+        <h1 class="btn btn-dark btn-lg">tag検索結果</h1>
       </div>
       
-      <% @tag_reviews.reverse_each do |review| %>
+      <% @reviews.reverse_each do |review| %>
       <div class="card mt-4 shadow-lg">
         <%= link_to review_path(review.id), class: "text-dark" do %>
           <!--タイトルと評価-->

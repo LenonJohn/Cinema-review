@@ -2,12 +2,8 @@
   <div class="row">
     <!--タグ一覧-->
     <div class="col-lg-2 sidebar_fixed">
-      <%= render "search_form" %>
-      <% @tag_list.each do |list| %>
-        <%= link_to tag_reviews_path(list.id) do %>
-        <div class="badge badge-dark"><%= list.tag_name %></div>
-        <% end %>
-      <% end %>
+      <%= render "search_form", q: @q, tag_search: @tag_search %>
+      <%= render "tags/tag_list", tag_list: @tag_list %>
     </div>
     
     <!--新規投稿-->
@@ -74,7 +70,7 @@
           <% end %>
             <!--タグ表示-->
             <% review.tags.each do |tag| %>
-              <%= link_to tag_reviews_path(tag.id) do %>
+              <%= link_to tag_path(tag.id) do %>
               <div class="badge badge-dark"><%= tag.tag_name %></div>
               <% end %>
             <% end %>

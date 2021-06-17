@@ -7,9 +7,10 @@ Rails.application.routes.draw do
     resource :favorites, only: [:create, :destroy]
   end
   get 'search', to: 'reviews#search'
+  get "tag_search", to: "reviews#tag_search"
   
-  resources :tags, only: [:index] do
-    get "reviews", to: "reviews#tag_search"
+  resources :tags, only: [:index, :show] do
+    
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
