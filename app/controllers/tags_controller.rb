@@ -4,4 +4,10 @@ class TagsController < ApplicationController
    @tag = Tag.all
   end
   
+  def show
+    @tag_list = Tag.all
+    @tag = Tag.find(params[:id])
+    @tag_reviews = @tag.reviews.all
+  end
+  
 end

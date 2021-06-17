@@ -18,18 +18,33 @@ class ReviewsController < ApplicationController
     @tag_list = Tag.all
     @q = Review.ransack(params[:q])
     @review = @q.result(distinct: true)
+    @tag_search = Tag.ransack(params[:tag_search])
+    @tag_reviews = @tag_search.result(distinct: true)
   end
   
   def search
     @tag_list = Tag.all
     @q = Review.ransack(params[:q])
     @review = @q.result(distinct: true)
+    @tag_search = Tag.ransack(params[:q])
+    @tag_reviews = @tag_search.result(distinct: true)
   end
   
   def tag_search
     @tag_list = Tag.all
-    @tag = Tag.find(params[:tag_id])
-    @tag_reviews = @tag.reviews.all
+    @tag = Tag.ransack(params[:q])
+    @tags = @tag.result(distinct: true)
+    @reviews = []
+    if @tags.length > 0
+      @tags.each do |tag|
+        tagmaps = TagMap.where(tag_id: tag.id)
+        tagmaps.each do |tag_map|
+          review = Review.find(tag_map.review_id)
+          @reviews.push(review)
+        end
+      end
+    end
+    @reviews
   end
   
   def show
@@ -58,6 +73,7 @@ class ReviewsController < ApplicationController
   
   def search_params
     params.require(:q).permit!
+    params.require(:t).permit!
   end
   
 end
