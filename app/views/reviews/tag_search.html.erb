@@ -1,7 +1,8 @@
 <div class="container my-4">
   <div class="row">
     
-    <div class="col-lg-2 sidebar_fixed">
+    <div class="col-lg-3">
+      <%= render "search_form", q: @q, tag_search: @tag_search %>
       <%= render "tags/tag_list", tag_list: @tag_list %>
     </div>
     
@@ -12,37 +13,7 @@
       </div>
       
       <% @reviews.reverse_each do |review| %>
-      <div class="card mt-4 shadow-lg">
-        <%= link_to review_path(review.id), class: "text-dark" do %>
-          <!--タイトルと評価-->
-          <div class="card-header">
-            <div class="row">
-              <h3 class="col-sm-9"><%= review.cinema_title %></h3>
-              <h3 class="col-sm-3 text-right"><%= review.rate %> /5.0</h3>
-            </div>
-          </div>
-          <!--レビュー-->
-          <div class="card-body">
-            <p>Title:  <%= review.title %></p>
-            <p class="alert alert-dark" role="alert"><%= review.body %></p>
-        <% end %>
-            <!--タグ表示-->
-            <% review.tags.each do |tag| %>
-            <div class="badge badge-dark"><%= tag.tag_name %></div>
-            <% end %>
-          </div>
-          <!--諸機能-->
-          <div class="card-footer">
-            <div class= "row" >
-              <!--投稿者・投稿日-->
-              <div class="my-auto col-sm">by <%= review.user.name %> <%= review.created_at.to_s(:datetime_jp) %></div>
-              <!--いいね・コメント-->
-              <div id = "review_<%= review.id %>" >
-                <%= render "reviews/favorite", review: review %>
-              </div>
-            </div>
-          </div>
-      </div>
+        <%= render "review", review: review %>
       <% end %>
       
     </div>

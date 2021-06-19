@@ -32,6 +32,10 @@ class ReviewsController < ApplicationController
   
   def tag_search
     @tag_list = Tag.all
+    @q = Review.ransack(params[:q])
+    @review = @q.result(distinct: true)
+    @tag_search = Tag.ransack(params[:q])
+    @tag_reviews = @tag_search.result(distinct: true)
     @tag = Tag.ransack(params[:q])
     @tags = @tag.result(distinct: true)
     @reviews = []
