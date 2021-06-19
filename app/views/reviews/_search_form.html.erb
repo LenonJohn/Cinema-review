@@ -1,10 +1,24 @@
-<%= search_form_for q, url:search_path do |f| %>
-  <%= f.label :cinema_title, "映画検索" %>
-  <%= f.search_field :cinema_title_cont %>
-  <%= f.submit "検索" %>
-<% end %>
-<%= search_form_for tag_search, url:tag_search_path do |f| %>
-  <%= f.label :tag_name, "tag検索" %>
-  <%= f.search_field :tag_name_cont %>
-  <%= f.submit "検索" %>
-<% end %>
+<!--映画検索-->
+<div class="my-2">
+  <%= search_form_for q, url:search_path do |f| %>
+    <%= f.label :cinema_title, "映画検索" %>
+    <div class="input-group">
+      <%= f.search_field :cinema_title_cont, class:"form-control" %>
+      <div class="text-right input-group-append">
+        <%= f.submit "検索", class:"btn btn-outline-secondary" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div class="my-2">
+  <!--タグ検索-->
+  <%= search_form_for tag_search, url:tag_search_path do |f| %>
+    <%= f.label :tag_name, "Tag検索" %>
+    <div class="input-group">
+      <%= f.search_field :tag_name_cont, class:"form-control" %>
+      <div class="text-right input-group-append">
+        <%= f.submit "検索", class:"btn btn-outline-secondary" %>
+      </div>  
+    </div>
+  <% end %>
+</div>
