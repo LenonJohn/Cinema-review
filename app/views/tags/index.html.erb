@@ -1,0 +1,5 @@
+<% @tag.each do |tag| %>
+  <%= link_to tag_reviews_path(tag.id) do %>
+  <div class="badge badge-dark"><%= tag.tag_name %></div>
+  <% end %>
+<% end %>

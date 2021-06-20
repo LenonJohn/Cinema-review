@@ -1,0 +1,18 @@
+<div class="container my-4">
+  <div class="row">
+    
+    <div class="col-lg-3 sidebar_fixed">
+      <%= render "reviews/search_form", q: @q, tag_search: @tag_search %>
+      <%= render "tags/tag_list", tag_list: @tag_list %>
+    </div>
+    
+    <div class="col-lg-6">
+      
+      <% @reviews.reverse_each do |review| %>
+        <%= render "reviews/review", review: review %>
+      <% end %>
+      
+    </div>
+    
+  </div>
+</div>

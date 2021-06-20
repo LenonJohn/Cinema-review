@@ -1,0 +1,22 @@
+<div class="container my-4">
+  <div class="row">
+    
+    <div class="col-lg-3">
+      <%= render "search_form", q: @q, tag_search: @tag_search %>
+      <%= render "tags/tag_list", tag_list: @tag_list %>
+    </div>
+    
+    <div class="col-lg-6">
+      
+      <div>
+        <h1 class="btn btn-dark btn-lg">tag検索結果</h1>
+      </div>
+      
+      <% @reviews.reverse_each do |review| %>
+        <%= render "review", review: review %>
+      <% end %>
+      
+    </div>
+    
+  </div>
+</div>

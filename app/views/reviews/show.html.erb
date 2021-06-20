@@ -1,0 +1,68 @@
+<div class="container col-lg-4">
+  
+  <div class="card mx-auto my-4 shadow-lg">
+    
+    <div class="card-header">
+      <div class="row">
+        <h3 class="col-sm-9"><%= @review.cinema_title %></h3>
+        <h3 class="col-sm-3 text-right"><%= @review.rate %> /5.0</h3>
+      </div>
+    </div>
+    
+    <div class="card-body">
+      <p>Title:  <%= @review.title %></p>
+      <p class="alert alert-dark" role="alert" ><%= @review.body %></p>
+      <% @review.tags.each do |tag| %>
+      <div class="badge badge-dark"><%= tag.tag_name %></div>
+      <% end %>
+    </div>
+    
+    <div class="card-footer">
+      <div class= "row" >
+        <!--投稿者・投稿日-->
+        <div class="my-auto col-sm">by <%= @review.user.name %> <%= @review.created_at.to_s(:datetime_jp) %></div>
+        <div class="my-auto col-sm text-right">
+          <% if @review.user == current_user %>
+          <%= link_to "削除", review_path(@review), method: :delete %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  <!--コメント投稿-->
+  <div class="card mx-auto my-4 shadow-lg">
+    <div class="card-body">
+      <%= form_with(model:[@review, @post_comment], local: true) do |f| %>
+      <div class="form-group">
+        <%= f.text_area :comment, rows:'2',placeholder: "コメントをここに", class:"form-control" %>
+      </div>
+      <div class="text-right">
+        <%= f.submit "Post a comment", class:"btn btn-outline-secondary" %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+  <!--コメント一覧-->
+  <!--<p>Comment</p>-->
+  <% @review.post_comments.each do |post_comment| %>
+  <div class="card mx-auto my-4 shadow-lg">
+    <div class="card-body">
+      <p class="alert alert-secondary" role="alert"><%= post_comment.comment %></p>
+    </div>
+    <div class="card-footer my-auto">
+      <div class="row">
+        <div class="col-sm">
+          <%= post_comment.created_at.to_s(:datetime_jp) %>
+        </div>
+        <div class="col-sm text-right">
+          <% if post_comment.user == current_user %>
+          <%= link_to "削除", review_post_comment_path(post_comment.review, post_comment), method: :delete %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+  
+</div>
