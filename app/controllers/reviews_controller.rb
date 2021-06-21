@@ -1,19 +1,29 @@
 class ReviewsController < ApplicationController
-  def new
-    @new_review = Review.new
-  end
+  # def new
+  #   @new_review = Review.new
+  # end
   
   def create
     @new_review = Review.new(review_params)
     @new_review.user_id = current_user.id
-    # tag_list = params[:review][:tag_name].split(nil) 
-    tag_list = params[:tag_name].split(nil) 
-    @new_review.save
-    @new_review.save_tag(tag_list)
-    redirect_to reviews_path
+    tag_list = params[:review][:tag_name].split(nil) 
+    #tag_list = params[:tag_name].split(nil) 
+    if @new_review.save
+      @new_review.save_tag(tag_list)
+      redirect_to reviews_path
+    else
+      @reviews = Review.all
+      @tag_list = Tag.all
+      @q = Review.ransack(params[:q])
+      @review = @q.result(distinct: true)
+      @tag_search = Tag.ransack(params[:tag_search])
+      @tag_reviews = @tag_search.result(distinct: true)
+      render :index
+    end
   end
 
   def index
+    @new_review = Review.new
     @reviews = Review.all
     @tag_list = Tag.all
     @q = Review.ransack(params[:q])
@@ -72,7 +82,7 @@ class ReviewsController < ApplicationController
   private
   
   def review_params
-    params.permit(:cinema_title, :rate, :title, :body)
+    params.require(:review).permit(:cinema_title, :rate, :title, :body)
   end
   
   def search_params

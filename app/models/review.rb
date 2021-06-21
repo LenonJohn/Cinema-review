@@ -5,6 +5,11 @@ class Review < ApplicationRecord
    has_many :tag_maps, dependent: :destroy, foreign_key: "review_id" #独自
    has_many :tags, through: :tag_maps #独自
    
+   validates :cinema_title, presence:true
+   validates :title, presence:true
+   validates :body, presence:true
+   validates :rate, numericality: {greater_than: 0}
+   
    def favorited_by?(user)
       favorites.where(user_id: user.id).exists?
    end
