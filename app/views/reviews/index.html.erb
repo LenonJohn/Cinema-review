@@ -6,15 +6,9 @@
       <%= render "tags/tag_list", tag_list: @tag_list %>
     </div>
     
-    
     <!--新規投稿-->
     <div class="col-lg-6">
       <h1>Review</h1>
-      <!--バリデーション-->
-      <% if @new_review.errors.any? %>
-        <%= render "review_dialog", new_review: @new_review %>
-      <% end %>
-      
       <%= form_with model:@new_review, local:true do |f| %>
       <div class="card mt-4 shadow-lg">
         <div class="card-body">
