@@ -1,0 +1,12 @@
+<%= form_with model:sort, url: reviews_path, local:true, method: :get do |sort| %>
+  <div class="input-group">
+    <%= sort.select :keyword, [ ["新着", "new"],["人気", "likes"] ], {}, class:"form-control" %>
+    <div class="text-right input-group-append">
+      <%= sort.submit "Save", class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
+  <%#= sort.radio_button :keyword, :new %>
+  <%#= sort.label :keyword, "新規", {value: :new, style: "display: inline-block;"} %>
+  <%#= sort.radio_button :keyword, :likes %>
+  <%#= sort.label :keyword, "人気", {value: :likes, style: "display: inline-block;"} %>
+<% end %>

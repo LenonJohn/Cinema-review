@@ -14,6 +14,17 @@ class Review < ApplicationRecord
       favorites.where(user_id: user.id).exists?
    end
    
+   def self.sort(selection)
+      case selection
+      when "new"
+         return order(created_at: :DESC)
+      when "likes"
+        like_ids = Favorite.group(:review_id).order(Arel.sql('count(review_id) desc')).pluck(:review_id)
+        like_ids += where.not(id: like_ids).pluck(:id)
+        find(like_ids)
+      end
+   end
+   
    def save_tag(sent_tags)
       # current_tags = self.tags.pluck(:tag_name) unless self.tags.nil?
       # old_tags = current_tags - sent_tags

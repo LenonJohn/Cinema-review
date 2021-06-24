@@ -8,6 +8,18 @@
     
     <div class="col-lg-6">
       
+      <div class="d-flex justify-content-between">
+        
+        <div>
+          <h1>映画検索</h1>
+        </div>
+        
+        <!--<div class="col-lg-4 my-auto">-->
+        <!--  <%#= render "sort", sort: @sort %>-->
+        <!--</div>-->
+        
+      </div>
+      
       <% @review.reverse_each do |review| %>
         <%= render "review", review: review %>
       <% end %>

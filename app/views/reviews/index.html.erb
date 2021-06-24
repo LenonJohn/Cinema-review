@@ -8,7 +8,17 @@
     
     <!--新規投稿-->
     <div class="col-lg-6">
-      <h1>Review</h1>
+      <div class="d-flex justify-content-between">
+        
+        <div>
+          <h1>Review</h1>
+        </div>
+        
+        <div class="col-lg-4 my-auto">
+          <%= render "sort", sort: @sort %>
+        </div>
+        
+      </div>
       <!--バリデーション-->
       <% if @new_review.errors.any? %>
         <%= render "review_dialog", new_review: @new_review %>
@@ -56,7 +66,7 @@
       </div>
       <% end %>
       <!--投稿一覧-->
-      <% @reviews.reverse_each do |review| %>
+      <% @reviews.each do |review| %>
         <!--各レビュー-->
         <%= render "review", review: review %>
       <% end %>
