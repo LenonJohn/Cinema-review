@@ -55,8 +55,10 @@
         </div>
       </div>
       <% end %>
+      <%= link_to "新着", reviews_path(sort_select: "new_arrival") %>
+      <%= link_to "人気", reviews_path(sort_select: "topic_work") %>
       <!--投稿一覧-->
-      <% @reviews.reverse_each do |review| %>
+      <% @reviews.each do |review| %>
         <!--各レビュー-->
         <%= render "review", review: review %>
       <% end %>
