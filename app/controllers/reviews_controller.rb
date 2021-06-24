@@ -9,24 +9,34 @@ class ReviewsController < ApplicationController
       @new_review.save_tag(tag_list)
       redirect_to reviews_path
     else
-      @reviews = Review.all
       @tag_list = Tag.all
       @q = Review.ransack(params[:q])
-      @review = @q.result(distinct: true)
       @tag_search = Tag.ransack(params[:tag_search])
       @tag_reviews = @tag_search.result(distinct: true)
+      if params[:sort_select] == "new_arrival"
+        @reviews = Review.order("created_at ASC")
+      elsif params[:sort_select] == "topic_work"
+        @reviews = Review.find(Favorite.group(:review_id).order('count(review_id) desc').pluck(:review_id))
+      else
+        @reviews = @q.result(distinct: true)
+      end
       render :index
     end
   end
 
   def index
     @new_review = Review.new
-    @reviews = Review.all
     @tag_list = Tag.all
     @q = Review.ransack(params[:q])
-    @review = @q.result(distinct: true)
     @tag_search = Tag.ransack(params[:tag_search])
     @tag_reviews = @tag_search.result(distinct: true)
+    if params[:sort_select] == "new_arrival"
+      @reviews = Review.order("created_at ASC")
+    elsif params[:sort_select] == "topic_work"
+      @reviews = Review.find(Favorite.group(:review_id).order('count(review_id) asc').pluck(:review_id))
+    else
+      @reviews = @q.result(distinct: true)
+    end
   end
   
   def search
