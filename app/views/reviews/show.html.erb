@@ -53,6 +53,7 @@
     <div class="card-footer my-auto">
       <div class="row">
         <div class="col-sm">
+          by <%= post_comment.user.name %>
           <%= post_comment.created_at.to_s(:datetime_jp) %>
         </div>
         <div class="col-sm text-right">
