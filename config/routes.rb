@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   end
   get 'search', to: 'reviews#search'
   get "tag_search", to: "reviews#tag_search"
-  
   resources :tags, only: [:index, :show] do
     
   end

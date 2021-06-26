@@ -8,7 +8,30 @@
     
     <!--新規投稿-->
     <div class="col-lg-6">
-      <h1>Review</h1>
+      <div class="d-flex justify-content-between">
+        
+        <div>
+          <h1>Review</h1>
+        </div>
+        
+        <div class="my-auto">
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <%= link_to "新着", reviews_path(sort_select: "new_arrival"), class:"text-white" %>
+            </label>
+            <label class="btn btn-secondary">
+              <%= link_to "人気", reviews_path(sort_select: "topic_work"), class:"text-white" %>
+            </label>
+          </div>
+          
+          
+        </div>
+        
+      </div>
+      <!--バリデーション-->
+      <% if @new_review.errors.any? %>
+        <%= render "review_dialog", new_review: @new_review %>
+      <% end %>
       <%= form_with model:@new_review, local:true do |f| %>
       <div class="card mt-4 shadow-lg">
         <div class="card-body">
