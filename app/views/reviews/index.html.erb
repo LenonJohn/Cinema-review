@@ -1,12 +1,12 @@
 <div class="container my-4">
   <div class="row">
-    <!--タグ一覧-->
+    <!--サイドバー-->
     <div class="col-lg-3 sidebar_fixed">
       <%= render "search_form", q: @q, tag_search: @tag_search %>
       <%= render "tags/tag_list", tag_list: @tag_list %>
     </div>
     
-    <!--新規投稿-->
+    <!--レヴュー-->
     <div class="col-lg-6">
       <div class="d-flex justify-content-between">
         
@@ -30,8 +30,9 @@
       </div>
       <!--バリデーション-->
       <% if @new_review.errors.any? %>
-        <%= render "review_dialog", new_review: @new_review %>
+        <%= render "error_dialog", validate: @new_review %>
       <% end %>
+      <!--新規投稿-->
       <%= form_with model:@new_review, local:true do |f| %>
       <div class="card mt-4 shadow-lg">
         <div class="card-body">
@@ -59,7 +60,7 @@
           <% if user_signed_in? %>
           <div class="row">
             <div class="col-sm-9">
-              <%= f.text_field :tag_name ,placeholder:"Tag", class:"form-control" %>
+              <%= f.text_field :tag_name ,placeholder:"Tag1 tag2 tag3", class:"form-control" %>
             </div>
             <div class="col-sm-3 text-right">
               <%= f.submit "Post", class:"btn btn-outline-secondary form-control" %>

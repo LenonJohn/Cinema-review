@@ -5,10 +5,14 @@ class Review < ApplicationRecord
    has_many :tag_maps, dependent: :destroy, foreign_key: "review_id" #独自
    has_many :tags, through: :tag_maps #独自
    
-   validates :cinema_title, presence: true
-   validates :rate, numericality: {greater_than: 0}
-   validates :title, presence: true
-   validates :body, presence: true
+   validates :cinema_title, presence: {message: "#未入力"}
+   validates :cinema_title, length: { maximum: 20, message: "#20字以内まで"}
+   validates :rate, numericality: {greater_than: 0, message: "#未選択"}
+   validates :title, presence: {message: "#未入力"}
+   validates :title, length: { maximum: 20, message: "#20字以内まで"}
+   validates :body, presence: {message: "#未入力"}
+   validates :body, length: { maximum: 250, message: "#250字以内まで"}
+   validates :score, numericality: {greater_than: -0.7, message: "#文章が感情的になりすぎている可能性があります"}
    
    def favorited_by?(user)
       favorites.where(user_id: user.id).exists?
