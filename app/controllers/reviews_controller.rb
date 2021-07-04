@@ -2,6 +2,7 @@ class ReviewsController < ApplicationController
   
   def create
     @new_review = Review.new(review_params)
+    @new_review.score = Language.get_data(review_params[:body])
     @new_review.user_id = current_user.id
     tag_list = params[:review][:tag_name].split(nil) 
     #tag_list = params[:tag_name].split(nil) 

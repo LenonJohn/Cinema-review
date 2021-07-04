@@ -23,7 +23,7 @@
   <div class="card-footer">
     <div class= "row" >
       <!--投稿者・投稿日-->
-      <div class="my-auto col-sm">by <%= review.user.name %> <%= review.created_at.to_s(:datetime_jp) %></div>
+      <div class="my-auto col-sm">by <%= review.user.name %> <%= review.created_at.to_s(:datetime_jp) %> 感情スコア<%= review.score %></div>
       <!--いいね・コメント-->
       <div id = "review_<%= review.id %>" >
         <%= render "reviews/favorite", review: review %>

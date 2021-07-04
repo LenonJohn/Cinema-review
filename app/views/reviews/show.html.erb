@@ -13,7 +13,9 @@
       <p>Title:  <%= @review.title %></p>
       <p class="alert alert-dark" role="alert" ><%= @review.body %></p>
       <% @review.tags.each do |tag| %>
-      <div class="badge badge-dark"><%= tag.tag_name %></div>
+        <%= link_to tag_path(tag.id) do %>
+        <div class="badge badge-dark"><%= tag.tag_name %></div>
+        <% end %>
       <% end %>
     </div>
     
@@ -30,6 +32,10 @@
     </div>
     
   </div>
+  
+  <% if @post_comment.errors.any? %>
+    <%= render "reviews/error_dialog", validate: @post_comment %>
+  <% end %>
   <!--コメント投稿-->
   <div class="card mx-auto my-4 shadow-lg">
     <div class="card-body">
