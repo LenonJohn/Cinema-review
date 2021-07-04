@@ -1,0 +1,6 @@
+<%= validate.errors.count %>つのエラーがあります。
+<% validate.errors.full_messages.each do |message| %>
+  <ul>
+    <ui><%= message %></ui>
+  </ul>
+<% end %> 
