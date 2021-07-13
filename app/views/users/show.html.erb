@@ -8,6 +8,10 @@
     
     <div class="col-lg-6">
       
+      <div class="alert alert-secondary" role="alert">
+        投稿数：<%= @reviews.count %>件　平均感情スコア：<%= @reviews_score %>
+      </div>
+      
       <% @reviews.reverse_each do |review| %>
         <%= render "reviews/review", review: review %>
       <% end %>

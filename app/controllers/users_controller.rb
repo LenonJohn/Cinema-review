@@ -7,5 +7,6 @@ class UsersController < ApplicationController
     @review = @q.result(distinct: true)
     @tag_search = Tag.ransack(params[:tag_search])
     @tag_reviews = @tag_search.result(distinct: true)
+    @reviews_score = @user.reviews.average(:score)
   end
 end
